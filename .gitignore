@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+.venv/
+
+# Build outputs
+dist/
+coverage/
+
+# Python caches and test artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.sqlite
+*.sqlite3
+*.db
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# TypeScript incremental build artifacts
+*.tsbuildinfo
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
