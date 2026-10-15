@@ -5,7 +5,7 @@ import {
 } from "recharts";
 import { money } from "../lib/finance";
 
-const pieColors = ["#258269", "#d98b5f", "#597ca1", "#e6b55d", "#7b78ae", "#78aa9b", "#d37b7b", "#8d9baa"];
+const pieColors = ["#f1f1f1", "#adadad", "#d1d1d1", "#858585", "#e0e0e0", "#999999", "#c2c2c2", "#747474"];
 
 export default function FinancialCharts({
   income,
@@ -27,20 +27,20 @@ export default function FinancialCharts({
           <AreaChart data={[{ month: "Monthly", income, expenses: totalExpenses }]} margin={{ top: 15, right: 8, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="incomeFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#258269" stopOpacity={0.22} />
-                <stop offset="95%" stopColor="#258269" stopOpacity={0} />
+                <stop offset="5%" stopColor="#f1f1f1" stopOpacity={0.22} />
+                <stop offset="95%" stopColor="#f1f1f1" stopOpacity={0} />
               </linearGradient>
               <linearGradient id="expenseFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#dd936b" stopOpacity={0.18} />
-                <stop offset="95%" stopColor="#dd936b" stopOpacity={0} />
+                <stop offset="5%" stopColor="#999999" stopOpacity={0.18} />
+                <stop offset="95%" stopColor="#999999" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid stroke="#edf0ef" vertical={false} />
-            <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: "#82908a", fontSize: 12 }} />
-            <YAxis tickFormatter={(value) => value >= 1000 ? `₹${Math.round(value / 1000)}k` : `₹${value}`} axisLine={false} tickLine={false} tick={{ fill: "#82908a", fontSize: 11 }} width={45} />
-            <Tooltip formatter={(value) => money(Number(value))} />
-            <Area type="monotone" dataKey="income" stroke="#258269" strokeWidth={2.5} fill="url(#incomeFill)" />
-            <Area type="monotone" dataKey="expenses" stroke="#dd936b" strokeWidth={2.5} fill="url(#expenseFill)" />
+            <CartesianGrid stroke="#3b3b3b" vertical={false} />
+            <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: "#c4c4c4", fontSize: 14 }} />
+            <YAxis tickFormatter={(value) => value >= 1000 ? `₹${Math.round(value / 1000)}k` : `₹${value}`} axisLine={false} tickLine={false} tick={{ fill: "#c4c4c4", fontSize: 13 }} width={52} />
+            <Tooltip formatter={(value) => money(Number(value))} contentStyle={{ color: "#f5f5f5", border: "1px solid #454545", borderRadius: 8, backgroundColor: "#171717" }} labelStyle={{ color: "#bdbdbd" }} itemStyle={{ color: "#f5f5f5" }} />
+            <Area type="monotone" dataKey="income" stroke="#f1f1f1" strokeWidth={2.5} fill="url(#incomeFill)" />
+            <Area type="monotone" dataKey="expenses" stroke="#999999" strokeWidth={2.5} fill="url(#expenseFill)" />
           </AreaChart>
         </ResponsiveContainer>
       </div>

@@ -14,6 +14,8 @@ import { emptyProfile, expenseCategories } from "./types";
 import type { FinancialProfile, Goal, Transaction } from "./types";
 import { CinematicWorldFrame } from "./components/CinematicWorldFrame";
 
+export { LandingPage } from "./pages/LandingPage";
+
 const FinancialCharts = lazy(() => import("./components/FinancialCharts"));
 
 function PageIntro({ eyebrow, title, description, action }: { eyebrow?: string; title: string; description?: string; action?: React.ReactNode }) {
@@ -38,7 +40,7 @@ function SelectField({ label, value, onChange, options }: { label: string; value
   return <label className="field"><span>{label}</span><select value={value} onChange={(event) => onChange(event.target.value)}>{options.map((option) => <option key={option}>{option}</option>)}</select></label>;
 }
 
-export function LandingPage() {
+export function LegacyLandingPage() {
   const [mobile, setMobile] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [activeScene, setActiveScene] = useState(0);
@@ -502,15 +504,17 @@ export function DashboardPage() {
   const priorities = buildPriorities(profile);
   const expenses = Object.entries(profile.expenses).filter(([, value]) => value > 0);
   const markReviewed = () => saveProfile({ ...profile, reviewedAt: new Date().toISOString() });
-  return <div className="app-page wrap">
+  return <div className="app-page wrap dashboard-page">
     <PageIntro eyebrow={`WELCOME${profile.name ? `, ${profile.name.toUpperCase()}` : ""}`} title="Your financial picture" description="A transparent snapshot based only on the information you entered." action={<button className="button button-secondary" onClick={markReviewed}><Activity size={16} /> Recalculate</button>} />
     <div className="local-notice"><ShieldCheck size={16} /><span><b>Local development mode:</b> this profile is stored only in your browser on this device, not shared or sent to a server.</span><Link to="/settings">Manage data</Link></div>
     {metrics.dataWarnings.length > 0 && <div className="warning-box"><CircleHelp size={18} /><div><b>Some information may be missing</b><ul>{metrics.dataWarnings.map((warning) => <li key={warning}>{warning}</li>)}</ul><Link to="/profile">Review your answers</Link></div></div>}
-    <div className="stats-grid">
+    <div className="stats-grid dashboard-primary-metrics">
       <StatCard label="Monthly income" value={money(metrics.totalIncome)} note="Take-home + other" icon={Banknote} />
       <StatCard label="Monthly expenses" value={money(metrics.totalExpenses)} note="From your estimates" icon={ArrowDownRight} tone="tone-orange" />
       <StatCard label={metrics.surplus >= 0 ? "Estimated surplus" : "Estimated shortfall"} value={money(Math.abs(metrics.surplus))} note="Income minus expenses" icon={metrics.surplus >= 0 ? ArrowUpRight : ArrowDownRight} tone={metrics.surplus >= 0 ? "tone-green" : "tone-red"} />
       <StatCard label="Savings rate" value={metrics.savingsRate === null ? "Not available" : `${metrics.savingsRate}%`} note="From reported monthly investments" icon={TrendingUp} tone="tone-blue" />
+    </div>
+    <div className="stats-grid dashboard-secondary-metrics" aria-label="Additional financial metrics">
       <StatCard label="Emergency fund" value={metrics.emergencyMonths === null ? "Not available" : `${metrics.emergencyMonths} mo`} note={metrics.emergencyMonths === null ? "Add essential expenses" : "Of essential expenses" } icon={Shield} tone="tone-purple" />
       <StatCard label="Total assets" value={money(metrics.assets)} note="Includes emergency savings" icon={Wallet} tone="tone-green" />
       <StatCard label="Total liabilities" value={money(metrics.liabilities)} note="Loans + card balances entered" icon={Banknote} tone="tone-orange" />

@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   ArrowLeft, ArrowRight, CheckCircle2, Eye, EyeOff, LockKeyhole,
   Mail, ShieldCheck, Sparkles, UserRound,
 } from "lucide-react";
-import { CinematicWorldFrame } from "../components/CinematicWorldFrame";
 import { useFintech } from "../App";
 import { AuthApiError, authApi } from "../services/auth";
 
@@ -18,26 +17,20 @@ function Brand() {
 }
 
 function AuthBackdrop() {
-  const [mobile, setMobile] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
-  const scene = useRef({ progress: 0.04, persona: 0, dimension: "Income" });
-  useEffect(() => {
-    const mobileQuery = window.matchMedia("(max-width: 680px)");
-    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => {
-      setMobile(mobileQuery.matches);
-      setReducedMotion(motionQuery.matches);
-    };
-    update();
-    mobileQuery.addEventListener("change", update);
-    motionQuery.addEventListener("change", update);
-    return () => {
-      mobileQuery.removeEventListener("change", update);
-      motionQuery.removeEventListener("change", update);
-    };
-  }, []);
   return <div className="auth-world" aria-hidden="true">
-    <CinematicWorldFrame scene={scene} mobile={mobile} reducedMotion={reducedMotion} />
+    <div className="auth-art-grid" />
+    <div className="auth-art-plane auth-art-plane-back">
+      <span>FINANCIAL PICTURE</span>
+      <svg viewBox="0 0 520 250" role="presentation">
+        <path d="M0 212 C72 203 91 171 155 181 S245 123 292 141 S365 93 415 102 S479 58 520 35" />
+      </svg>
+      <i />
+    </div>
+    <div className="auth-art-plane auth-art-plane-front">
+      <span>YOUR LIFE · YOUR PRIORITIES</span>
+      <b>Clarity creates<br />room to plan.</b>
+      <i /><i /><i />
+    </div>
     <div className="auth-world-shade" />
   </div>;
 }

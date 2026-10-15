@@ -29,7 +29,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const minimalExperience = ["/", "/onboarding", "/mobile-number", "/welcome-dashboard", "/profile", "/onboarding/profile", "/login", "/register", "/forgot-password", "/verify-email", "/reset-password"].includes(location.pathname);
   const isAppRoute = location.pathname !== "/" && !["/about", "/how-it-works", "/financial-education", "/privacy", "/terms", "/onboarding", "/mobile-number", "/welcome-dashboard", "/profile", "/onboarding/profile"].includes(location.pathname);
 
-  if (minimalExperience) return <div className="minimal-shell"><main>{children}</main></div>;
+  if (minimalExperience) return <div className={location.pathname === "/" ? "minimal-shell landing-shell" : "minimal-shell cinematic-app-shell"} data-route={location.pathname}><main>{children}</main></div>;
 
   const logout = async () => {
     setSignOutError("");
@@ -42,7 +42,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="site-shell">
+    <div className="site-shell" data-route={location.pathname}>
       <header className="topbar">
         <div className="topbar-inner">
           <Link to="/" className="brand" aria-label="FinTech home">
